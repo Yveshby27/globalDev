@@ -29,7 +29,9 @@ const Context = createContext<ContextProps>({
   setDestinationCountry(country: string) {},
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   setIsClientPage(isClientPage: boolean) {},
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   setClientTimezone(timezone: string) {},
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   setDestinationTimezone(timezone: string) {},
 });
 
