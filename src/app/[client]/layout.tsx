@@ -96,9 +96,11 @@ export default function ClientLayout({
         }
         className="w-48"
         onChange={async (e) => {
-          const selectedCountry = decodeURIComponent(e?.value);
-          context.setClientCountry(selectedCountry);
-          router.push(`/${selectedCountry}/${context.destinationCountry}`);
+          if (e?.value) {
+            const selectedCountry = decodeURIComponent(e.value);
+            context.setClientCountry(selectedCountry);
+            router.push(`/${selectedCountry}/${context.destinationCountry}`);
+          }
         }}
       ></Select>
       <label>Select destination country:</label>
