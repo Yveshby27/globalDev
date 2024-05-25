@@ -3,39 +3,39 @@ import { useRouter } from "next/navigation";
 import { useInfoContext } from "./context";
 import softwareDeveloperSalaries from "~/data";
 import Select from "react-select";
-
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
+import SimpleWorldMap from "~/components/SimpleWorldMap";
 export default function MainPage() {
   const router = useRouter();
   const context = useInfoContext();
+  const params = useParams<{ client: string; destination: string }>();
   const countries = softwareDeveloperSalaries.map((country) => ({
     value: country.name,
     label: country.name,
   }));
+  const [dropdownCountryIndex, setDropdownCountryIndex] = useState(-1);
+  useEffect(() => {
+    const index = softwareDeveloperSalaries.findIndex((country) => {
+      return country.name === context.clientCountry;
+    });
+    setDropdownCountryIndex(index);
+  }, [params, context, dropdownCountryIndex]);
 
   return (
     <div>
       <label>Where are you based in?</label>
       <Select
         options={countries}
+        value={countries[dropdownCountryIndex]}
         className="w-48"
-        onChange={(e) => {
+        onChange={async (e) => {
           context.setClientCountry(`${e?.value}`);
+          router.push(`/${e?.value}`);
         }}
       ></Select>
-      <button
-        className="mt-4 max-h-14 bg-blue-500 px-4  py-2 text-white hover:bg-blue-600"
-        onClick={() => {
-          router.push(`/${context.clientCountry}`);
-        }}
-      >
-        Continue
-      </button>
-      <div className="flex justify-center">
-        <div className=" h-96 w-1/2 border border-solid border-black text-center ">
-          WORLD MAP
-        </div>
-      </div>
+
+      <SimpleWorldMap></SimpleWorldMap>
     </div>
   );
 }
