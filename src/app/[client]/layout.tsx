@@ -53,6 +53,7 @@ export default function ClientLayout({
     const clientCountry = softwareDeveloperSalaries.find(
       (country) => country.name === context.clientCountry,
     );
+
     if (!clientCountry) return { recommended: [], others: [] };
 
     const sortedCountries = [...softwareDeveloperSalaries].sort(
@@ -61,20 +62,23 @@ export default function ClientLayout({
         Math.abs(b.std - clientCountry.std),
     );
 
-    // Filter out client country from recommended countries
     const recommendedCountries = sortedCountries
-      .slice(0, 4)
       .filter((country) => country.name !== context.clientCountry)
+      .slice(0, 3)
       .map((country) => ({
         value: country.name,
         label: `${country.name} (${country.std - clientCountry.std >= 0 ? "+" : "-"}${Math.abs(country.std - clientCountry.std)} hours)`,
       }));
 
-    // Filter out recommended countries from others
+    const recommendedCountryNames = new Set(
+      recommendedCountries.map((c) => c.value),
+    );
+
     const otherCountries = sortedCountries
       .filter(
         (country) =>
-          !recommendedCountries.find((c) => c.value === country.name),
+          country.name !== context.clientCountry &&
+          !recommendedCountryNames.has(country.name),
       )
       .map((country) => ({
         value: country.name,

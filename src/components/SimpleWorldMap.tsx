@@ -12,6 +12,15 @@ import { useInfoContext } from "~/app/context";
 import { useRouter } from "next/navigation";
 import { useParams } from "next/navigation";
 
+interface GeoProperties {
+  name: string;
+}
+
+interface GeoFeature {
+  rsmKey: string;
+  properties: GeoProperties;
+}
+
 export default function SimpleWorldMap() {
   const router = useRouter();
   const context = useInfoContext();
@@ -22,7 +31,7 @@ export default function SimpleWorldMap() {
     useState(null);
   const [hoveredCountry, setHoveredCountry] = useState("");
 
-  const handleClientCountryClick = (index) => {
+  const handleClientCountryClick = (index: number) => {
     const clickedCountry = data.objects.world.geometries[index];
     if (!clickedCountry) return;
     context.setClientCountry(clickedCountry.properties.name);
@@ -30,7 +39,7 @@ export default function SimpleWorldMap() {
     router.push(`/${clickedCountry.properties.name}`);
   };
 
-  const handleDestinationCountryClick = async (index) => {
+  const handleDestinationCountryClick = (index: number) => {
     const clickedCountry = data.objects.world.geometries[index];
     if (!clickedCountry) return;
     context.setDestinationCountry(clickedCountry.properties.name);
@@ -38,7 +47,7 @@ export default function SimpleWorldMap() {
     router.push(`/${context.clientCountry}/${clickedCountry.properties.name}`);
   };
 
-  const findCountryBasedOnSelectInput = (countryName) => {
+  const findCountryBasedOnSelectInput = (countryName: string) => {
     return data.objects.world.geometries.find(
       (geo) => geo.properties.name === countryName,
     );
@@ -67,7 +76,7 @@ export default function SimpleWorldMap() {
     }
   }, [context, selectedClientCountry, selectedDestinationCountry, params]);
 
-  const handleZoomEnd = (event) => {
+  const handleZoomEnd = (event: { zoom: number }) => {
     setZoomLevel(event.zoom);
   };
 
@@ -75,7 +84,7 @@ export default function SimpleWorldMap() {
     return Math.max(3, 8 / zoomLevel);
   };
 
-  const handleClick = (geo, index) => {
+  const handleClick = (geo: GeoFeature, index: number) => {
     if (selectedClientCountry === null) {
       handleClientCountryClick(index);
     } else {
@@ -83,6 +92,7 @@ export default function SimpleWorldMap() {
         handleClientCountryClick(index);
       } else {
         const clickedCountry = data.objects.world.geometries[index];
+        if (!clickedCountry) return;
         if (
           selectedClientCountry.properties.name !==
           clickedCountry.properties.name
@@ -132,7 +142,7 @@ export default function SimpleWorldMap() {
           >
             <Geographies geography={data}>
               {({ geographies }) =>
-                geographies.map((geo, index) => {
+                geographies.map((geo: GeoFeature, index: number) => {
                   const name = geo.properties.name;
                   const isClientCountrySelected =
                     selectedClientCountry &&
