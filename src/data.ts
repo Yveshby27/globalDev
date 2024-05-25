@@ -1088,14 +1088,14 @@ const softwareDeveloperSalaries = [
   {
     name: "Iceland",
     average_salary: 85000, 
-    description: "Iceland offers competitive salaries for software developers, reflecting its high standard of living, strong tech infrastructure, and innovation-driven economy.", // Add a suitable description
+    description: "Iceland offers competitive salaries for software developers, reflecting its high standard of living, strong tech infrastructure, and innovation-driven economy.", 
     zone: 'Iceland',
     std: 0
   },
   {
     name: "Madagascar",
     average_salary: 30000,
-    description: "Madagascar's tech industry is growing, offering opportunities for software developers. The average salary reflects the local economic conditions and cost of living.", // Add a suitable description
+    description: "Madagascar's tech industry is growing, offering opportunities for software developers. The average salary reflects the local economic conditions and cost of living.", 
     zone: 'Indian/Antananarivo',
     std: 3
   },
@@ -1109,8 +1109,15 @@ const softwareDeveloperSalaries = [
   {
     name: "Saudi Arabia",
     average_salary: 60000, 
-    description: "Saudi Arabia offers competitive salaries for software developers, driven by its rapidly growing tech sector and substantial investments in digital infrastructure.", // Suitable description
+    description: "Saudi Arabia offers competitive salaries for software developers, driven by its rapidly growing tech sector and substantial investments in digital infrastructure.", 
     zone: 'Asia/Riyadh',
+    std: 3
+  },
+  {
+    name: "Uganda",
+    average_salary: 25000,
+    description: "Uganda's tech industry is nascent but growing steadily, offering opportunities for software developers. The average salary reflects the local economic conditions and cost of living, making it an affordable location for tech professionals.",
+    zone: 'Africa/Kampala',
     std: 3
   }
 ];

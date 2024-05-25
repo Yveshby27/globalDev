@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import { useInfoContext } from "~/app/context";
 import softwareDeveloperSalaries from "~/data";
-import SimpleWorldMap from "~/components/SimpleWorldMap";
+import WorldMap from "~/components/WorldMap";
 import { useParams, useRouter } from "next/navigation";
 
 export default function ClientLayout({
@@ -134,7 +134,7 @@ export default function ClientLayout({
         }}
       ></Select>
       <div className="flex gap-5">
-        <SimpleWorldMap></SimpleWorldMap>
+        <WorldMap></WorldMap>
         <div>{children}</div>
       </div>
     </div>

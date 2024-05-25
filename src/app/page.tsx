@@ -5,7 +5,7 @@ import softwareDeveloperSalaries from "~/data";
 import Select from "react-select";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import SimpleWorldMap from "~/components/SimpleWorldMap";
+import WorldMap from "~/components/WorldMap";
 export default function MainPage() {
   const router = useRouter();
   const context = useInfoContext();
@@ -35,7 +35,7 @@ export default function MainPage() {
         }}
       ></Select>
 
-      <SimpleWorldMap></SimpleWorldMap>
+      <WorldMap></WorldMap>
     </div>
   );
 }
