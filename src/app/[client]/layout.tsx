@@ -26,8 +26,8 @@ export default function ClientLayout({
   useEffect(() => {
     context.setIsClientPage(false);
 
-    const clientCountry = decodeURIComponent(params.client || "");
-    const destinationCountry = decodeURIComponent(params.destination || "");
+    const clientCountry = decodeURIComponent(params.client ?? "");
+    const destinationCountry = decodeURIComponent(params.destination ?? "");
 
     if (clientCountry) {
       context.setClientCountry(clientCountry);
@@ -122,9 +122,11 @@ export default function ClientLayout({
         }
         className="w-48"
         onChange={async (e) => {
-          const selectedCountry = decodeURIComponent(e?.value);
-          context.setDestinationCountry(selectedCountry);
-          router.push(`/${context.clientCountry}/${selectedCountry}`);
+          if (e?.value) {
+            const selectedCountry = decodeURIComponent(e.value);
+            context.setDestinationCountry(selectedCountry);
+            router.push(`/${context.clientCountry}/${selectedCountry}`);
+          }
         }}
       ></Select>
       <div className="flex gap-5">

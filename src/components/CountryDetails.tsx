@@ -46,7 +46,7 @@ const CountryDetails = () => {
       if (absoluteDifference !== 0) {
         setComparisonMessage(
           `Salary in ${higherCountry} is ${Math.abs(
-            percentageDiff.toFixed(2),
+            parseFloat(percentageDiff.toFixed(2)),
           )}% higher than ${
             higherCountry === country2.name ? country1.name : country2.name
           }. ${country2.name} is ${absoluteDifference} hours ${direction} ${
@@ -56,7 +56,7 @@ const CountryDetails = () => {
       } else {
         setComparisonMessage(
           `Salary in ${higherCountry} is ${Math.abs(
-            percentageDiff.toFixed(2),
+            parseFloat(percentageDiff.toFixed(2)),
           )}% higher than ${
             higherCountry === country2.name ? country1.name : country2.name
           }.${country1.name} is the same as ${country2.name} in terms of timezone.`,
