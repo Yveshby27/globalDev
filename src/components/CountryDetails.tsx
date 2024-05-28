@@ -1,9 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import softwareDeveloperSalaries from "~/data";
 import { useInfoContext } from "~/app/context";
 
-interface CountryInfo {
+interface DataProps {
   name: string;
   average_salary: number;
   description: string;
@@ -11,16 +10,16 @@ interface CountryInfo {
   std: number;
 }
 
-const CountryDetails = () => {
+const CountryDetails = ({ data }: { data: DataProps[] }) => {
   const context = useInfoContext();
-  const [country1, setCountry1] = useState<CountryInfo | null>(null);
-  const [country2, setCountry2] = useState<CountryInfo | null>(null);
+  const [country1, setCountry1] = useState<DataProps | null>(null);
+  const [country2, setCountry2] = useState<DataProps | null>(null);
   const [comparisonMessage, setComparisonMessage] = useState<string | null>(
     null,
   );
 
   useEffect(() => {
-    for (const country of softwareDeveloperSalaries) {
+    for (const country of data) {
       if (context.clientCountry === country.name) setCountry1(country);
       if (context.destinationCountry === country.name) setCountry2(country);
     }
