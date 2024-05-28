@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useState } from "react";
 import softwareDeveloperSalaries from "~/data";
 import { useInfoContext } from "~/app/context";

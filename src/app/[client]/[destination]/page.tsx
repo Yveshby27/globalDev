@@ -1,6 +1,4 @@
-"use client";
 import CountryDetails from "~/components/CountryDetails";
-
 export default function DestinationPage() {
   return (
     <div>

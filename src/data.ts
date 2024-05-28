@@ -1,4 +1,4 @@
-const softwareDeveloperSalaries = [
+const countryData = [
   {
     name: "United States",
     average_salary: 105000,
@@ -1121,4 +1121,4 @@ const softwareDeveloperSalaries = [
     std: 3
   }
 ];
-export default softwareDeveloperSalaries;
+export default countryData;
