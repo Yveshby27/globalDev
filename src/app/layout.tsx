@@ -20,12 +20,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`font-sans ${inter.variable} m-4`}>
+      <body className={`font-sans ${inter.variable} m-2`}>
         <ContextProvider>
-          <h1 className="absolute right-8 top-4 text-5xl">devy</h1>
-          <div className="mt-14 text-center text-xl">
-            Check out the average developer salaries in any country in the
-            world.
+          <div className="flex justify-end">
+            <h1 className="absolute mr-5 w-1/5 text-5xl">devy</h1>
+          </div>
+          <div className="flex justify-center">
+            <div className="mt-14 w-7/12 whitespace-normal break-words text-center text-xl font-bold">
+              Check out the average developer salaries in any country in the
+              world.
+            </div>
           </div>
           {children}
         </ContextProvider>

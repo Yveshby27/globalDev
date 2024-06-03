@@ -1,6 +1,7 @@
 import countryData from "~/data";
 import WorldMap from "~/components/WorldMap";
 import DestinationCountryDropdown from "~/components/DestinationCountryDropdown";
+import RefinedSearchButton from "~/components/RefinedSearchButton";
 
 export default function ClientLayout({
   children,
@@ -12,10 +13,15 @@ export default function ClientLayout({
       <DestinationCountryDropdown
         data={countryData}
       ></DestinationCountryDropdown>
-      <div className="flex gap-5">
-        <WorldMap></WorldMap>
-        <div>{children}</div>
+      <div className=" flex w-full flex-row-reverse flex-wrap justify-center">
+        <div className="w-1/3 min-w-96">
+          <div className="flex items-center justify-center">
+            <WorldMap></WorldMap>
+          </div>
+        </div>
+        <div className="mb-10 flex items-center justify-center">{children}</div>
       </div>
+      <RefinedSearchButton></RefinedSearchButton>
     </div>
   );
 }

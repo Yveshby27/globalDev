@@ -91,50 +91,58 @@ const DestinationCountryDropdown = ({ data }: { data: DataProps[] }) => {
   };
 
   return (
-    <div>
-      <label>You are in:</label>
-      <Select
-        options={countries}
-        value={
-          clientDropdownCountryIndex !== -1
-            ? countries[clientDropdownCountryIndex]
-            : null
-        }
-        className="w-48"
-        onChange={async (e) => {
-          if (e?.value) {
-            const selectedCountry = decodeURIComponent(e.value);
-            context.setClientCountry(selectedCountry);
-            router.push(`/${selectedCountry}/${context.destinationCountry}`);
-          }
-        }}
-      ></Select>
-      <label>Select destination country:</label>
-      <Select
-        options={[
-          {
-            label: "Recommended",
-            options: sortCountriesByTimezoneDifference().recommended,
-          },
-          {
-            label: "Others",
-            options: sortCountriesByTimezoneDifference().others,
-          },
-        ]}
-        value={
-          destinationDropdownCountryIndex !== -1
-            ? countries[destinationDropdownCountryIndex]
-            : null
-        }
-        className="w-48"
-        onChange={async (e) => {
-          if (e?.value) {
-            const selectedCountry = decodeURIComponent(e.value);
-            context.setDestinationCountry(selectedCountry);
-            router.push(`/${context.clientCountry}/${selectedCountry}`);
-          }
-        }}
-      ></Select>
+    <div className="flex justify-center">
+      <div className="mt-7 flex flex-wrap justify-center gap-10">
+        <div>
+          <label>Where are you based in?</label>
+          <Select
+            options={countries}
+            value={
+              clientDropdownCountryIndex !== -1
+                ? countries[clientDropdownCountryIndex]
+                : null
+            }
+            className="w-48"
+            onChange={async (e) => {
+              if (e?.value) {
+                const selectedCountry = decodeURIComponent(e.value);
+                context.setClientCountry(selectedCountry);
+                router.push(
+                  `/${selectedCountry}/${context.destinationCountry}`,
+                );
+              }
+            }}
+          ></Select>
+        </div>
+        <div>
+          <label>Where are you hiring?</label>
+          <Select
+            options={[
+              {
+                label: "Recommended",
+                options: sortCountriesByTimezoneDifference().recommended,
+              },
+              {
+                label: "Others",
+                options: sortCountriesByTimezoneDifference().others,
+              },
+            ]}
+            value={
+              destinationDropdownCountryIndex !== -1
+                ? countries[destinationDropdownCountryIndex]
+                : null
+            }
+            className="w-48"
+            onChange={async (e) => {
+              if (e?.value) {
+                const selectedCountry = decodeURIComponent(e.value);
+                context.setDestinationCountry(selectedCountry);
+                router.push(`/${context.clientCountry}/${selectedCountry}`);
+              }
+            }}
+          ></Select>
+        </div>
+      </div>
     </div>
   );
 };

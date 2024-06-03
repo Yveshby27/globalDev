@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React, { useState, useEffect } from "react";
 import {
   ComposableMap,
@@ -38,6 +38,7 @@ export default function WorldMap() {
     context.setClientCountry(clickedCountry.properties.name);
     //@ts-expect-error will fix later
     setSelectedClientCountry(clickedCountry);
+
     router.push(`/${clickedCountry.properties.name}`);
   };
 
@@ -83,6 +84,16 @@ export default function WorldMap() {
         findCountryBasedOnSelectInput(context.clientCountry),
       );
     }
+    if (params.client) {
+      context.setClientCountry(decodeURIComponent(params.client));
+      setSelectedClientCountry(
+        //@ts-expect-error will fix later
+        findCountryBasedOnSelectInput(decodeURIComponent(params.client)),
+      );
+    } else {
+      context.setClientCountry("");
+      setSelectedClientCountry(null);
+    }
   }, [context, selectedClientCountry, selectedDestinationCountry, params]);
 
   const handleZoomEnd = (event: { zoom: number }) => {
@@ -117,28 +128,26 @@ export default function WorldMap() {
   return (
     <div
       style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
         width: "100%",
-        marginTop: "20px",
-        backgroundColor: "#f0f0f0",
-        borderRadius: "15px",
-        boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.2)",
-        padding: "20px",
         position: "relative",
       }}
     >
       <div
         style={{
-          width: "50%",
-          height: "50%",
+          width: "100%",
+          height: "60vh",
           position: "relative",
+          display: "flex",
+          justifyContent: "center",
         }}
       >
         <ComposableMap
           projection="geoMercator"
-          style={{ backgroundColor: "white", borderRadius: "15px" }}
+          style={{
+            backgroundColor: "transparent",
+            display: "flex",
+            alignItems: "center",
+          }}
           projectionConfig={{
             scale: 100,
             center: [0, 0],
@@ -146,8 +155,8 @@ export default function WorldMap() {
         >
           <ZoomableGroup
             translateExtent={[
-              [-200, 0],
-              [1000, 600],
+              [-100, 0],
+              [800, 600],
             ]}
             onMoveEnd={handleZoomEnd}
           >
@@ -191,7 +200,7 @@ export default function WorldMap() {
                           },
                         }}
                       />
-                      {zoomLevel > 1 && (
+                      {zoomLevel > 3 && (
                         // @ts-expect-error this works regardless so no need to type it
                         <Marker coordinates={geoCentroid(geo)}>
                           <text

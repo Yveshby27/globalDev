@@ -904,7 +904,7 @@ const countryData = [
     std: 2
   },
   {
-    name: "Congo",
+    name: "Democratic Republic of Congo",
     average_salary: 22000,
     description: "The Republic of the Congo's tech sector is developing, with opportunities for software developers primarily in local IT services, telecommunications, and government-related projects.",
     zone: 'Africa/Lubumbashi',
@@ -1119,6 +1119,19 @@ const countryData = [
     description: "Uganda's tech industry is nascent but growing steadily, offering opportunities for software developers. The average salary reflects the local economic conditions and cost of living, making it an affordable location for tech professionals.",
     zone: 'Africa/Kampala',
     std: 3
-  }
+  },
+  {
+    name: "Serbia",
+    average_salary:35000,
+    description:"Serbia has a well-established tech sector, with a growing number of startups and established companies seeking skilled software developers. The country offers a balanced cost of living and competitive salaries, attracting tech talent from the region and beyond." ,
+    zone: 'Europe/Belgrade',
+    std: 1
+  },{
+    name: "Ethiopia",
+    average_salary:20000,
+    description:"Ethiopia's tech industry is growing with increased investments in digital infrastructure and education. Salaries for software developers are lower than in other countries, but the cost of living is also low, presenting a unique growth opportunity in a developing market.",
+    zone: 'Africa/Addis_Ababa',
+    std: 3
+  },
 ];
 export default countryData;

@@ -23,22 +23,27 @@ const ClientCountryDropdown = ({ data }: { data: DataProps[] }) => {
   const [dropdownCountryIndex, setDropdownCountryIndex] = useState(-1);
   useEffect(() => {
     const index = data.findIndex((country) => {
-      return country.name === context.clientCountry;
+      return country.name === decodeURIComponent(params.client);
     });
     setDropdownCountryIndex(index);
   }, [params, context, dropdownCountryIndex]);
 
   return (
-    <div>
-      <Select
-        options={countries}
-        value={countries[dropdownCountryIndex]}
-        className="w-48"
-        onChange={async (e) => {
-          context.setClientCountry(`${e?.value}`);
-          router.push(`/${e?.value}`);
-        }}
-      ></Select>
+    <div className="mt-4 flex items-center gap-3">
+      <div>
+        <Select
+          options={countries}
+          value={countries[dropdownCountryIndex]}
+          className="w-48"
+          onChange={async (e) => {
+            context.setClientCountry(`${e?.value}`);
+            router.push(`/${e?.value}`);
+          }}
+        />
+      </div>
+      <div>
+        and we&#39;ll show you the ones with the least timezone difference
+      </div>
     </div>
   );
 };
