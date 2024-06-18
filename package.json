@@ -7,10 +7,12 @@
     "build": "next build",
     "dev": "next dev",
     "lint": "next lint",
-    "start": "next start"
+    "start": "next start",
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "@t3-oss/env-nextjs": "^0.9.2",
+    "cypress": "^13.11.0",
     "leaflet": "^1.9.4",
     "next": "^14.1.0",
     "rc-select": "^14.13.0",
