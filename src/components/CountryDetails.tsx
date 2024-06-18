@@ -40,7 +40,7 @@ const CountryDetails: React.FC<DataProps> = ({ client, destination }) => {
     (preferredStartTimeCountry2 - timezoneDifference + 24) % 24;
 
   return (
-    <div className="text-sm">
+    <div className="mb-10 flex items-center text-sm" data-cy="country-details">
       {country1 && country2 && (
         <div className="max-w-md  p-6">
           <h2 className=" text-xl font-bold">

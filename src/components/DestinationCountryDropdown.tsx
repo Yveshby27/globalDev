@@ -1,9 +1,7 @@
 "use client";
 import Select from "react-select";
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
-import { useInfoContext } from "../app/context";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
 interface DataProps {
   name: string;
@@ -15,10 +13,8 @@ interface DataProps {
 
 const DestinationCountryDropdown = ({ data }: { data: DataProps[] }) => {
   const router = useRouter();
-  const context = useInfoContext();
+
   const params = useParams<{ client: string; destination: string }>();
-  const [clientDropdownCountryIndex, setClientDropdownCountryIndex] =
-    useState(-1);
   const [destinationDropdownCountryIndex, setDestinationDropdownCountryIndex] =
     useState(-1);
   const countries = data.map((country) => ({
@@ -26,34 +22,22 @@ const DestinationCountryDropdown = ({ data }: { data: DataProps[] }) => {
     label: country.name,
   }));
   useEffect(() => {
-    context.setIsClientPage(false);
-
-    const clientCountry = decodeURIComponent(params.client ?? "");
-    const destinationCountry = decodeURIComponent(params.destination ?? "");
-
-    if (clientCountry) {
-      context.setClientCountry(clientCountry);
-    }
-
-    if (destinationCountry) {
-      context.setDestinationCountry(destinationCountry);
-    }
-
-    const clientIndex = data.findIndex(
-      (country) => country.name === clientCountry,
-    );
-
     const destinationIndex = data.findIndex(
-      (country) => country.name === destinationCountry,
+      (country) =>
+        country.name.toLowerCase() ===
+        decodeURIComponent(params.destination).toLowerCase(),
     );
 
-    setClientDropdownCountryIndex(clientIndex);
+    if (destinationIndex === -1) {
+      router.push(`/${params.client}`);
+    }
+
     setDestinationDropdownCountryIndex(destinationIndex);
-  }, [params, context]);
+  }, [params]);
 
   const sortCountriesByTimezoneDifference = () => {
     const clientCountry = data.find(
-      (country) => country.name === context.clientCountry,
+      (country) => country.name === params.client,
     );
 
     if (!clientCountry) return { recommended: [], others: [] };
@@ -65,7 +49,7 @@ const DestinationCountryDropdown = ({ data }: { data: DataProps[] }) => {
     );
 
     const recommendedCountries = sortedCountries
-      .filter((country) => country.name !== context.clientCountry)
+      .filter((country) => country.name !== params.client)
       .slice(0, 3)
       .map((country) => ({
         value: country.name,
@@ -79,7 +63,7 @@ const DestinationCountryDropdown = ({ data }: { data: DataProps[] }) => {
     const otherCountries = sortedCountries
       .filter(
         (country) =>
-          country.name !== context.clientCountry &&
+          country.name !== params.client &&
           !recommendedCountryNames.has(country.name),
       )
       .map((country) => ({
@@ -91,32 +75,12 @@ const DestinationCountryDropdown = ({ data }: { data: DataProps[] }) => {
   };
 
   return (
-    <div className="flex justify-center">
-      <div className="mt-7 flex flex-wrap justify-center gap-10">
+    <div className="mt-3" data-cy="destination-dropdown">
+      <label>Where are you hiring?</label>
+      <div className="mt-3 flex gap-3">
         <div>
-          <label>Where are you based in?</label>
           <Select
-            options={countries}
-            value={
-              clientDropdownCountryIndex !== -1
-                ? countries[clientDropdownCountryIndex]
-                : null
-            }
-            className="w-48"
-            onChange={async (e) => {
-              if (e?.value) {
-                const selectedCountry = decodeURIComponent(e.value);
-                context.setClientCountry(selectedCountry);
-                router.push(
-                  `/${selectedCountry}/${context.destinationCountry}`,
-                );
-              }
-            }}
-          ></Select>
-        </div>
-        <div>
-          <label>Where are you hiring?</label>
-          <Select
+            classNamePrefix="react-select-destination"
             options={[
               {
                 label: "Recommended",
@@ -136,8 +100,7 @@ const DestinationCountryDropdown = ({ data }: { data: DataProps[] }) => {
             onChange={async (e) => {
               if (e?.value) {
                 const selectedCountry = decodeURIComponent(e.value);
-                context.setDestinationCountry(selectedCountry);
-                router.push(`/${context.clientCountry}/${selectedCountry}`);
+                router.push(`/${params.client}/${selectedCountry}`);
               }
             }}
           ></Select>

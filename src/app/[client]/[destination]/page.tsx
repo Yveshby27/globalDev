@@ -6,7 +6,7 @@ export default function Page({
   params: { client: string; destination: string };
 }) {
   return (
-    <div>
+    <div className="flex items-center justify-center">
       <CountryDetails
         client={params.client}
         destination={params.destination}

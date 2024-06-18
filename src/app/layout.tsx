@@ -1,7 +1,9 @@
 import "~/styles/globals.css";
-
 import { Inter } from "next/font/google";
-import { ContextProvider } from "./context";
+import countryData from "~/data";
+import CountryInputs from "~/components/CountryInputs";
+import WorldMap from "~/components/WorldMap";
+import RefinedSearchButton from "~/components/RefinedSearchButton";
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
@@ -21,18 +23,25 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`font-sans ${inter.variable} m-2`}>
-        <ContextProvider>
-          <div className="flex justify-end">
-            <h1 className="absolute mr-5 w-1/5 text-5xl">devy</h1>
+        <div className="flex justify-end">
+          <h1 className="absolute w-1/5 text-5xl">devy</h1>
+        </div>
+        <div className="flex justify-center">
+          <div className="mt-14 w-7/12 whitespace-normal break-words text-center text-xl font-bold">
+            Check out the average developer salaries in any country in the
+            world.
           </div>
-          <div className="flex justify-center">
-            <div className="mt-14 w-7/12 whitespace-normal break-words text-center text-xl font-bold">
-              Check out the average developer salaries in any country in the
-              world.
+        </div>
+        <div className="mt-5 flex flex-col">
+          <CountryInputs data={countryData}></CountryInputs>
+          <div className="mt-10 flex flex-wrap-reverse justify-center gap-5">
+            <div className=" flex items-center">{children}</div>
+            <div className="w-1/3 min-w-72">
+              <WorldMap></WorldMap>
             </div>
           </div>
-          {children}
-        </ContextProvider>
+        </div>
+        <RefinedSearchButton></RefinedSearchButton>
       </body>
     </html>
   );
