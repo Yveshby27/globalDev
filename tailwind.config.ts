@@ -7,7 +7,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["IBM Plex Sans Condensed" ,...fontFamily.sans],
+        sans: ["IBM Plex Sans" ,...fontFamily.sans],
       },
     },
   },
