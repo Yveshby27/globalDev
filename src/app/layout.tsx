@@ -22,7 +22,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`font-sans ${inter.variable} m-2`}>
+      <body className={`m-2 font-sans`}>
         <div className="flex justify-end">
           <h1 className="absolute w-1/5 text-5xl">devy</h1>
         </div>
