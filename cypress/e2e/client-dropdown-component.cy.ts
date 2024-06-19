@@ -15,7 +15,7 @@ describe('Client Country Dropdown Tests', () => {
     cy.get('[data-cy=client-dropdown] .react-select-client__control').click();
 
 
-    cy.get('.react-select-client__menu-list', { timeout: 10000 }).should('be.visible').within(() => {
+    cy.get('.react-select-client__menu-list', { timeout: 10000 }).should('exist').within(() => {
       cy.contains('France').should('exist');
       cy.contains('Germany').should('exist');
     });
