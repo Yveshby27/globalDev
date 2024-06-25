@@ -48,7 +48,7 @@ export default function WorldMap() {
 
   const findCountryBasedOnSelectInput = (countryName: string) => {
     return data.objects.world.geometries.find(
-      (geo) => geo.properties.name === countryName,
+      (geo) => geo.properties.name.toLowerCase() === countryName.toLowerCase(),
     );
   };
 

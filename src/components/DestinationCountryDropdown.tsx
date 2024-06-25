@@ -33,7 +33,7 @@ const DestinationCountryDropdown = ({ data }: { data: DataProps[] }) => {
     }
 
     setDestinationDropdownCountryIndex(destinationIndex);
-  }, [params]);
+  }, [params.destination]);
 
   const sortCountriesByTimezoneDifference = () => {
     const clientCountry = data.find(
@@ -75,10 +75,10 @@ const DestinationCountryDropdown = ({ data }: { data: DataProps[] }) => {
   };
 
   return (
-    <div className="mt-3" data-cy="destination-dropdown">
-      <label>Where are you hiring?</label>
-      <div className="mt-3 flex gap-3">
+    <div data-cy="destination-dropdown">
+      <div className="flex  justify-center">
         <div>
+          <label>Where are you hiring?</label>
           <Select
             classNamePrefix="react-select-destination"
             options={[
@@ -96,7 +96,7 @@ const DestinationCountryDropdown = ({ data }: { data: DataProps[] }) => {
                 ? countries[destinationDropdownCountryIndex]
                 : null
             }
-            className="w-48"
+            className="mt-3 w-48"
             onChange={async (e) => {
               if (e?.value) {
                 const selectedCountry = decodeURIComponent(e.value);

@@ -14,15 +14,15 @@ const CountryDetails: React.FC<DataProps> = ({ client, destination }) => {
   const country1 = getCountry(decodeURIComponent(client));
   const country2 = getCountry(decodeURIComponent(destination));
   if (!country1 || !country2) return;
-  const percentageDiff =
-    ((country2.average_salary - country1.average_salary) /
-      country1.average_salary) *
-    100;
-
-  const higherCountry =
-    country2.average_salary > country1.average_salary
-      ? country2.name
-      : country1.name;
+  const higherSalaryCountry =
+    country1.average_salary > country2.average_salary ? country1 : country2;
+  const lowerSalaryCountry =
+    country1.average_salary <= country2.average_salary ? country1 : country2;
+  const percentageDiff = Math.abs(
+    ((higherSalaryCountry.average_salary - lowerSalaryCountry.average_salary) /
+      lowerSalaryCountry.average_salary) *
+      100,
+  );
 
   const timezoneDifference = country2.std - country1.std;
 
@@ -52,9 +52,11 @@ const CountryDetails: React.FC<DataProps> = ({ client, destination }) => {
             </div>
           ) : (
             <div className="mt-8">
-              Salary in {higherCountry} is{" "}
-              {Math.abs(parseFloat(percentageDiff.toFixed(2)))}% higher than{" "}
-              {higherCountry === country2.name ? country1.name : country2.name}.
+              Salary in {country2.name} is {percentageDiff.toFixed(2)}%{" "}
+              {country2.average_salary > country1.average_salary
+                ? "higher"
+                : "lower"}{" "}
+              than in {country1.name}.
             </div>
           )}
           {absoluteDifference !== 0 && (

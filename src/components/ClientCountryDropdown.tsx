@@ -11,6 +11,11 @@ interface DataProps {
   std: number;
 }
 
+interface CountryOption {
+  value: string;
+  label: string;
+}
+
 const ClientCountryDropdown = ({ data }: { data: DataProps[] }) => {
   const router = useRouter();
   const params = useParams<{ client: string; destination: string }>();
@@ -18,33 +23,47 @@ const ClientCountryDropdown = ({ data }: { data: DataProps[] }) => {
     value: country.name,
     label: country.name,
   }));
-  const [dropdownCountryIndex, setDropdownCountryIndex] = useState(-1);
+  const [dropdownCountryIndex, setDropdownCountryIndex] = useState<
+    number | null
+  >(null);
 
   useEffect(() => {
-    const clientIndex = data.findIndex((country) => {
-      return (
-        country.name.toLowerCase() ===
-        decodeURIComponent(params.client).toLowerCase()
-      );
-    });
-    setDropdownCountryIndex(clientIndex);
-  }, [params]);
+    if (params.client) {
+      const clientIndex = data.findIndex((country) => {
+        return (
+          country.name.toLowerCase() ===
+          decodeURIComponent(params.client).toLowerCase()
+        );
+      });
+      setDropdownCountryIndex(clientIndex !== -1 ? clientIndex : null);
+    } else {
+      setDropdownCountryIndex(null);
+    }
+  }, [params.client]);
+
+  const handleChange = (selectedOption: CountryOption | null) => {
+    if (selectedOption === null) return;
+    const destinationPath = params.destination
+      ? `/${selectedOption.value}/${params.destination}`
+      : `/${selectedOption.value}`;
+    router.push(destinationPath);
+  };
 
   return (
-    <div className="mt-3" data-cy="client-dropdown">
-      <label>Where are you based in?</label>
-      <div className="mt-3 flex gap-3">
+    <div data-cy="client-dropdown">
+      <div className="flex flex-wrap items-end justify-center gap-3">
         <div>
+          <label>Where are you based in?</label>
           <Select
             options={countries}
-            value={countries[dropdownCountryIndex]}
-            className="w-48"
+            value={
+              dropdownCountryIndex !== null
+                ? countries[dropdownCountryIndex]
+                : null
+            }
+            className="mt-3 w-48"
             classNamePrefix="react-select-client"
-            onChange={(e) => {
-              if (params.destination)
-                router.push(`/${e?.value}/${params.destination}`);
-              else router.push(`/${e?.value}`);
-            }}
+            onChange={handleChange}
           />
         </div>
         <div>

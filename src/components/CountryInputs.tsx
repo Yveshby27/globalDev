@@ -17,6 +17,7 @@ const CountryInputs = ({ data }: { data: DataProps[] }) => {
   const router = useRouter();
 
   useEffect(() => {
+    console.log("HEY");
     const clientIndex = data.findIndex((country) => {
       return (
         country.name.toLowerCase() ===
@@ -27,7 +28,7 @@ const CountryInputs = ({ data }: { data: DataProps[] }) => {
     if (clientIndex === -1) {
       router.push(`/`);
     }
-  }, [params]);
+  }, [params.client]);
 
   return (
     <div className="flex flex-wrap justify-center gap-10">
