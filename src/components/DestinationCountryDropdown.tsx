@@ -37,7 +37,9 @@ const DestinationCountryDropdown = ({ data }: { data: DataProps[] }) => {
 
   const sortCountriesByTimezoneDifference = () => {
     const clientCountry = data.find(
-      (country) => country.name === params.client,
+      (country) =>
+        country.name.toLowerCase() ===
+        decodeURIComponent(params.client).toLowerCase(),
     );
 
     if (!clientCountry) return { recommended: [], others: [] };
@@ -49,7 +51,11 @@ const DestinationCountryDropdown = ({ data }: { data: DataProps[] }) => {
     );
 
     const recommendedCountries = sortedCountries
-      .filter((country) => country.name !== params.client)
+      .filter(
+        (country) =>
+          country.name.toLowerCase() !==
+          decodeURIComponent(params.client).toLowerCase(),
+      )
       .slice(0, 3)
       .map((country) => ({
         value: country.name,
@@ -63,7 +69,8 @@ const DestinationCountryDropdown = ({ data }: { data: DataProps[] }) => {
     const otherCountries = sortedCountries
       .filter(
         (country) =>
-          country.name !== params.client &&
+          country.name.toLowerCase() !==
+            decodeURIComponent(params.client).toLowerCase() &&
           !recommendedCountryNames.has(country.name),
       )
       .map((country) => ({
